@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 public class Table {
 	
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 	
 	public Table(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		
