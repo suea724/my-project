@@ -14,6 +14,14 @@ drop sequence accomodation_seq;
 drop sequence reply_seq;
 drop sequence review_seq;
 
+-- 관리자
+create table Manager_TB(
+    seq number primary key,
+    id varchar2(16) not null,
+    pw varchar2(16) not null
+);
+
+create sequence manager_seq;
 
 -- 고객
 create table Customer_TB(

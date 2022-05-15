@@ -1,4 +1,5 @@
-
+-- 관리자
+insert into Manager_TB values (manager_seq.nextval, 'admin', 'admin');
 
 -- 고객
 
