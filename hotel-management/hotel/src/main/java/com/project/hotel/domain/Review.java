@@ -1,9 +1,8 @@
-package com.project.hotel.repository.dto;
+package com.project.hotel.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class Review {
     private String seq;
     private String rsv_seq;

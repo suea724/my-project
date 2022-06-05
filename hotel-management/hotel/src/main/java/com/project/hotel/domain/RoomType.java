@@ -1,10 +1,8 @@
-package com.project.hotel.repository.dto;
+package com.project.hotel.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class RoomType {
 
     String seq;

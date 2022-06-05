@@ -1,4 +1,4 @@
-package com.project.hotel.repository.dto;
+package com.project.hotel.web.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +9,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-public class Customer {
-
-    private String seq;
+public class JoinForm { // 회원가입 커맨드 객체
 
     @NotEmpty(message = "이름은 필수 입력 값입니다.")
     @Pattern(regexp = "^[가-힣]{2,5}$", message = "이름은 2~5자 이내 한글로 입력해주세요.")
@@ -32,5 +30,4 @@ public class Customer {
     @NotEmpty(message = "이메일은 필수 입력 값입니다.")
     @Email(message = "이메일 형식에 맞지 않습니다.")
     private String email;
-
 }

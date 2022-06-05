@@ -1,4 +1,4 @@
-package com.project.hotel.repository;
+package com.project.hotel.domain;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
