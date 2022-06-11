@@ -24,13 +24,4 @@ public class Customer {
         this.tel = tel;
         this.email = email;
     }
-
-    @Builder
-    public Customer(String name, String id, String pw, String tel, String email) {
-        this.name = name;
-        this.id = id;
-        this.pw = pw;
-        this.tel = tel;
-        this.email = email;
-    }
 }

@@ -8,8 +8,8 @@ public class DBUtil {
     private static Connection conn = null;
 
     public static Connection open() {
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String id = "hotel";
+        String url = "jdbc:oracle:thin:@172.16.11.215:1521:xe";
+        String id = "c##hotel";
         String pw = "hotel";
 
         try {
