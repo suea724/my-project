@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <title>호텔 메인 페이지</title>
     <link th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 500px;
+        }
+        .row-cols-xl-1 {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-<div class="d-grid gap-2 col-6 mx-auto">
-    <hr>
-    <div>
-        <p th:text="${session.loginCustomer.name}"></p>
+<div class="container">
+    <div class="py-5 text-center">
+        <h3>[[${loginCustomer.name}]]님 어서오세요</h3>
+    </div>
+    <div class="row-cols-xl-1">
+        <button class="btn btn-primary" onclick="location.href='/customer/login'">객실 예약</button>
+    </div>
+    <div class="row-cols-xl-1">
+        <button class="btn btn-primary" onclick="location.href='/admin/login'">예약내역 확인</button>
+    </div>
+    <div class="row-cols-xl-1">
+        <button class="btn btn-primary" onclick="location.href='/customer/join'">리뷰 게시판</button>
+    </div>
+    <div class="row-cols-xl-1">
+        <button class="btn btn-primary" onclick="location.href='/customer/join'">로그아웃</button>
     </div>
 </div>
 </body>

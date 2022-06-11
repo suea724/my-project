@@ -4,7 +4,6 @@ import com.project.hotel.domain.customer.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,8 +26,8 @@ public class MainController {
         }
 
         // 세션이 있는 경우 세션으로부터 로그인한 고객 객체를 view에 전달
-        Customer loginCustomer = (Customer) session.getAttribute("loginCustomer");
-        model.addAttribute(loginCustomer);
+        Customer loginCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
+        model.addAttribute("loginCustomer", loginCustomer);
         return "customer/main";
     }
 }

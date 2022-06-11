@@ -1,4 +1,4 @@
-package com.project.hotel.domain.login;
+package com.project.hotel.service;
 
 import com.project.hotel.domain.customer.Customer;
 import com.project.hotel.domain.customer.CustomerRepository;

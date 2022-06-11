@@ -2,7 +2,7 @@ package com.project.hotel.web;
 
 import com.project.hotel.domain.customer.Customer;
 import com.project.hotel.domain.customer.CustomerRepository;
-import com.project.hotel.domain.login.LoginService;
+import com.project.hotel.service.LoginService;
 import com.project.hotel.web.dto.LoginForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -48,7 +48,7 @@ public class LoginController {
 
         // 로그인 성공 시 세션 생성 후 뷰로 전달
         HttpSession session = request.getSession();
-        session.setAttribute("loginCustomer", loginCustomer);
+        session.setAttribute(SessionConst.LOGIN_CUSTOMER, loginCustomer);
         model.addAttribute(session);
 
         return "redirect:/customer/main";

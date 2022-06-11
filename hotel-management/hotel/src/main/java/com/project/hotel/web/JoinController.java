@@ -2,6 +2,7 @@ package com.project.hotel.web;
 
 import com.project.hotel.domain.customer.Customer;
 import com.project.hotel.domain.customer.CustomerRepository;
+import com.project.hotel.service.JoinService;
 import com.project.hotel.web.dto.JoinForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class JoinController {
 
-    private final CustomerRepository customerRepository;
+    private final JoinService joinService;
 
     @GetMapping("customer/join")
     public String joinGet(@ModelAttribute("joinForm") JoinForm joinForm) {
@@ -31,19 +32,13 @@ public class JoinController {
         }
 
         // 중복된 아이디가 존재하는 경우
-        if (customerRepository.findById(joinForm.getId()) != null) {
+        if (joinService.isDuplicate(joinForm)) {
             bindingResult.reject("idAlreadyExist", "중복된 아이디가 존재합니다. 다른 아이디를 입력해주세요.");
             return "customer/join";
         }
 
-        Customer joinCustomer = Customer.builder().name(joinForm.getName())
-                                                .id(joinForm.getId())
-                                                .pw(joinForm.getPw())
-                                                .tel(joinForm.getTel())
-                                                .email(joinForm.getEmail())
-                                                .build();
+        joinService.join(joinForm);
 
-        customerRepository.save(joinCustomer);
         return "redirect:/customer/login";
     }
 }
