@@ -6,7 +6,7 @@
     <link th:href="@{/css/bootstrap.min.css}" href="../../static/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
-            max-width: 800px;
+            max-width: 925px;
         }
     </style>
 </head>
@@ -22,6 +22,7 @@
             <th scope="col">체크인 날짜</th>
             <th scope="col">체크아웃 날짜</th>
             <th scope="col">상태</th>
+            <th scope="col">리뷰 작성</th>
         </tr>
         <tr th:each="r : ${reservationList}">
             <td th:text="${r.reservationDate}"></td>
@@ -30,6 +31,10 @@
             <td th:text="${r.checkIn}"></td>
             <td th:text="${r.checkOut}"></td>
             <td th:text="${r.status}"></td>
+            <td th:if="${r.status.toString().equals('투숙완료')}">
+                <input type="button" value="리뷰작성" class="btn-sm btn-light"
+                       th:onclick="|location.href='@{/customer/reservation/{seq}(seq=${r.seq})}'|">
+            </td>
         </tr>
     </table>
 </div>

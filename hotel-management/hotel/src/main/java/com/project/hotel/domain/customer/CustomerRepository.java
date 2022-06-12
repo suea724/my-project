@@ -165,7 +165,7 @@ public class CustomerRepository {
         try {
             Connection CONN = DBUtil.open();
 
-            String sql = "select rsv.rsv_date, rm.type, rsv.guests, rsv.check_in, rsv.check_out, rsv.status " +
+            String sql = "select rsv.seq, rsv.rsv_date, rm.type, rsv.guests, rsv.check_in, rsv.check_out, rsv.status " +
                     "from Reservation_TB rsv " +
                     "inner join Type_TB rm " +
                     "on rsv.type_seq = rm.seq " +
@@ -178,6 +178,7 @@ public class CustomerRepository {
 
             while(rs.next()) {
                 ReservationListDto dto = ReservationListDto.builder()
+                                                                .seq(rs.getString("seq"))
                                                                 .reservationDate(rs.getString("rsv_date"))
                                                                 .roomType(rs.getString("type"))
                                                                 .guests(rs.getString("guests"))
