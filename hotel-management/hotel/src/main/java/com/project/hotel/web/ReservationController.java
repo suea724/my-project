@@ -9,6 +9,8 @@ import com.project.hotel.web.dto.ReviewResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +46,6 @@ public class ReservationController {
 
         ReviewResponseDto reviewResponseDto = reviewService.findByReservationSeq(seq);
 
-        // TODO DB에서 리뷰를 삭제해도 반영되지 않는 문제 해결해야함
         if (reviewResponseDto != null) {
             model.addAttribute(reviewResponseDto); // 작성한 리뷰가 있으면 리뷰 내용 페이지로 이동 
             return "customer/readReview";
@@ -55,7 +56,14 @@ public class ReservationController {
     }
 
     @PostMapping("/customer/reservation/{seq}")
-    public String reviewPost(@PathVariable String seq, @ModelAttribute ReviewRequestDto reviewRequestDto) {
+    public String reviewPost(@PathVariable String seq, @Validated @ModelAttribute ReviewRequestDto reviewRequestDto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            ReservationDto reservationDto = reservationService.findBySeq(seq); // 사용자 인증 정보까지는 필요없으므로 예약 번호로 DTO를 찾음
+            model.addAttribute("reservationDto", reservationDto);
+            return "/customer/createReview";
+        }
+
         reviewService.save(seq, reviewRequestDto);
         return "redirect:/customer/reservation";
     }

@@ -27,4 +27,9 @@ public class ReservationService {
         }
         return reservationDto;
     }
+
+    public ReservationDto findBySeq(String seq) {
+        ReservationDto reservationDto = reservationRepository.findBySeq(seq);
+        return reservationDto;
+    }
 }
