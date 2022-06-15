@@ -2,7 +2,7 @@ package com.project.hotel.domain.customer;
 
 import com.project.hotel.domain.DBUtil;
 import com.project.hotel.domain.Review;
-import com.project.hotel.web.dto.ReviewRequestDto;
+import com.project.hotel.web.dto.ReviewDto;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -56,5 +56,23 @@ public class ReviewRepository {
             e.printStackTrace();
         }
         return review;
+    }
+
+    public void update(String seq, ReviewDto reviewDto) {
+        try {
+            Connection CONN = DBUtil.open();
+            String sql = "update review_tb set rating = ?, content = ? where rsv_seq = ?";
+            PreparedStatement pstmt = CONN.prepareStatement(sql);
+            pstmt.setString(1, reviewDto.getRating());
+            pstmt.setString(2, reviewDto.getContent());
+            pstmt.setString(3, seq);
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            DBUtil.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

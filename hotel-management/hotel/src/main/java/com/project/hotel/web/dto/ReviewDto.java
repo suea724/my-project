@@ -2,14 +2,13 @@ package com.project.hotel.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
 //@NoArgsConstructor
-public class ReviewRequestDto {
+public class ReviewDto {
 
     @NotNull(message = "별점을 선택해주세요.")
     private String rating;
@@ -17,7 +16,7 @@ public class ReviewRequestDto {
     private String content;
 
     @Builder
-    public ReviewRequestDto(String rating, String content) {
+    public ReviewDto(String rating, String content) {
         this.rating = rating;
         this.content = content;
     }

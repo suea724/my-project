@@ -6,15 +6,34 @@
     <title>Title</title>
     <style>
         .container {
-            max-width: 800px;
+            max-width: 1000px;
         }
     </style>
+    <script>
+        window.onload = function() {
+            $("#btn-delete").click(function() {
+                let seq = $("#seq").val();
+                $.ajax({
+                        type: "DELETE",
+                        url: "/customer/reservation/" + seq,
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8'
+                    }).done(function() {
+                        alert('리뷰가 삭제되었습니다.');
+                        window.location.href = '/customer/reservation';
+                    }).fail(function(error) {
+                        alert(JSON.stringify(error));
+                    })
+                });
+            }
+    </script>
 </head>
 <body>
 <div class="container">
     <h1 class="py-5 text-center">리뷰 내용</h1>
     <table class="table table-bordered">
         <tr>
+            <th scope="col">예약 번호</th>
             <th scope="col">예약 날짜</th>
             <th scope="col">객실 유형</th>
             <th scope="col">인원수</th>
@@ -23,6 +42,7 @@
             <th scope="col">상태</th>
         </tr>
         <tr>
+            <td th:text="${reservationDto.seq}"></td>
             <td th:text="${reservationDto.reservationDate}"></td>
             <td th:text="${reservationDto.roomType}"></td>
             <td th:text="${reservationDto.guests}"></td>
@@ -31,7 +51,7 @@
             <td th:text="${reservationDto.status}"></td>
         </tr>
     </table>
-    <form method="post" th:object="${reviewResponseDto}">
+    <form th:object="${reviewDto}">
         <div class="mb-3 text-center">
             <input type="radio" id="rating1" th:field="*{rating}" th:value="1" class="form-check-input" disabled>
             <label for="rating1">⭐</label>
@@ -45,9 +65,11 @@
             <label for="rating5">⭐⭐⭐⭐⭐</label>
         </div>
         <div class="row-cols-auto mb-3">
-            <textarea class="form-control" rows="12" placeholder="리뷰를 작성해주세요." th:text="*{content}" readonly></textarea>
+            <textarea class="form-control" rows="12" th:text="*{content}" readonly></textarea>
         </div>
         <div class="float-end">
+            <input type="button" class="btn btn-primary mx-2" value="수정" th:onclick="|location.href='@{/customer/reservation/{seq}(seq=${reservationDto.seq})}/update'|">
+            <input type="button" class="btn btn-danger" value="삭제" id="btn-delete">
             <input type="button" class="btn btn-secondary mx-2" value="뒤로 가기" onclick="location.href='/customer/reservation'">
         </div>
     </form>

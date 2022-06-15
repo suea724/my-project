@@ -4,9 +4,9 @@ import com.project.hotel.domain.customer.Customer;
 import com.project.hotel.service.ReservationService;
 import com.project.hotel.service.ReviewService;
 import com.project.hotel.web.dto.ReservationDto;
-import com.project.hotel.web.dto.ReviewRequestDto;
-import com.project.hotel.web.dto.ReviewResponseDto;
+import com.project.hotel.web.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -44,19 +45,19 @@ public class ReservationController {
 
         model.addAttribute(reservationDto); // 예약 정보 전달
 
-        ReviewResponseDto reviewResponseDto = reviewService.findByReservationSeq(seq);
+        ReviewDto reviewDto = reviewService.findByReservationSeq(seq);
 
-        if (reviewResponseDto != null) {
-            model.addAttribute(reviewResponseDto); // 작성한 리뷰가 있으면 리뷰 내용 페이지로 이동 
+        if (reviewDto != null) {
+            model.addAttribute(reviewDto); // 작성한 리뷰가 있으면 리뷰 내용 페이지로 이동
             return "customer/readReview";
         }
 
-        model.addAttribute("reviewRequestDto", ReviewRequestDto.builder().build());
+        model.addAttribute("reviewRequestDto", ReviewDto.builder().build());
         return "customer/createReview";
     }
 
     @PostMapping("/customer/reservation/{seq}")
-    public String reviewPost(@PathVariable String seq, @Validated @ModelAttribute ReviewRequestDto reviewRequestDto, BindingResult bindingResult, Model model) {
+    public String reviewPost(@PathVariable String seq, @Validated @ModelAttribute ReviewDto reviewDto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             ReservationDto reservationDto = reservationService.findBySeq(seq); // 사용자 인증 정보까지는 필요없으므로 예약 번호로 DTO를 찾음
@@ -64,8 +65,25 @@ public class ReservationController {
             return "/customer/createReview";
         }
 
-        reviewService.save(seq, reviewRequestDto);
+        reviewService.save(seq, reviewDto);
         return "redirect:/customer/reservation";
+    }
+
+    @GetMapping("/customer/reservation/{seq}/update")
+    public String updateReviewGet(@PathVariable String seq, Model model) {
+
+        ReservationDto reservationDto = reservationService.findBySeq(seq);
+        ReviewDto reviewDto = reviewService.findByReservationSeq(seq);
+
+        model.addAttribute(reservationDto);
+        model.addAttribute(reviewDto);
+        return "customer/editReview";
+    }
+
+    @PostMapping("/customer/reservation/{seq}/update")
+    public String updateReviewPost(@PathVariable String seq, @ModelAttribute ReviewDto reviewDto) {
+        reviewService.update(seq, reviewDto);
+        return "redirect:/customer/reservation/{seq}";
     }
 
 }
