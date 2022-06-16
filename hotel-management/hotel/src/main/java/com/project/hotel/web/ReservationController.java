@@ -52,7 +52,7 @@ public class ReservationController {
             return "customer/readReview";
         }
 
-        model.addAttribute("reviewRequestDto", ReviewDto.builder().build());
+        model.addAttribute("reviewDto", ReviewDto.builder().build());
         return "customer/createReview";
     }
 
@@ -84,6 +84,12 @@ public class ReservationController {
     public String updateReviewPost(@PathVariable String seq, @ModelAttribute ReviewDto reviewDto) {
         reviewService.update(seq, reviewDto);
         return "redirect:/customer/reservation/{seq}";
+    }
+
+    @GetMapping("/customer/reservation/{seq}/delete")
+    public String deleteReviewGet(@PathVariable String seq) {
+        reviewService.delete(seq);
+        return "redirect:/customer/reservation";
     }
 
 }

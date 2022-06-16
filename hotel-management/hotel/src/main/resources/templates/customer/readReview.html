@@ -9,23 +9,13 @@
             max-width: 1000px;
         }
     </style>
-    <script>
-        window.onload = function() {
-            $("#btn-delete").click(function() {
-                let seq = $("#seq").val();
-                $.ajax({
-                        type: "DELETE",
-                        url: "/customer/reservation/" + seq,
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8'
-                    }).done(function() {
-                        alert('리뷰가 삭제되었습니다.');
-                        window.location.href = '/customer/reservation';
-                    }).fail(function(error) {
-                        alert(JSON.stringify(error));
-                    })
-                });
+    <script th:inline="javascript">
+        function deleteReview () {
+            let url = window.location.href;
+            if (confirm('리뷰를 삭제하시겠습니까?')) {
+                location.href = url + "/delete";
             }
+        }
     </script>
 </head>
 <body>
@@ -69,7 +59,7 @@
         </div>
         <div class="float-end">
             <input type="button" class="btn btn-primary mx-2" value="수정" th:onclick="|location.href='@{/customer/reservation/{seq}(seq=${reservationDto.seq})}/update'|">
-            <input type="button" class="btn btn-danger" value="삭제" id="btn-delete">
+            <input type="button" class="btn btn-danger" value="삭제" th:onclick="deleteReview()">
             <input type="button" class="btn btn-secondary mx-2" value="뒤로 가기" onclick="location.href='/customer/reservation'">
         </div>
     </form>

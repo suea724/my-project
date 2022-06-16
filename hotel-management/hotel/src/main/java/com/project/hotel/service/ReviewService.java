@@ -39,4 +39,8 @@ public class ReviewService {
         reviewRepository.update(seq, reviewDto);
     }
 
+    public void delete(String seq) {
+        reviewRepository.delete(seq);
+    }
+
 }

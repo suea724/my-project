@@ -75,4 +75,20 @@ public class ReviewRepository {
             e.printStackTrace();
         }
     }
+
+    public void delete(String seq) {
+        try {
+            Connection CONN = DBUtil.open();
+            String sql = "delete from review_tb where rsv_seq = ?";
+            PreparedStatement pstmt = CONN.prepareStatement(sql);
+            pstmt.setString(1, seq);
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            DBUtil.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
