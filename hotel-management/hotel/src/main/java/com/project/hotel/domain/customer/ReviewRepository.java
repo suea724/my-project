@@ -2,12 +2,12 @@ package com.project.hotel.domain.customer;
 
 import com.project.hotel.domain.DBUtil;
 import com.project.hotel.domain.Review;
+import com.project.hotel.web.dto.ReviewBoardDto;
 import com.project.hotel.web.dto.ReviewDto;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 
 @Repository
 public class ReviewRepository {
@@ -91,4 +91,47 @@ public class ReviewRepository {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<ReviewBoardDto> findReviewList() {
+
+        ArrayList<ReviewBoardDto> list = new ArrayList<>();
+
+        try {
+
+            Connection conn = DBUtil.open();
+            Statement stmt = conn.createStatement();
+            String sql = "select rv.seq, rv.content,rv.rating, rsv.check_in, rsv.check_out, t.type from review_tb rv \n" +
+                    "    inner join reservation_tb rsv \n" +
+                    "        on rv.rsv_seq = rsv.seq \n" +
+                    "            inner join type_tb t\n" +
+                    "                on rsv.type_seq = t.seq\n" +
+                    "                    order by check_out desc";
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()) {
+
+                String rating = "";
+
+                for (int i = 0 ; i < rs.getInt("rating") ; i ++) {
+                    rating += "⭐";
+                }
+                ReviewBoardDto dto = ReviewBoardDto.builder()
+                                                    .seq(rs.getString("seq"))
+                                                    .content(rs.getString("content"))
+                                                    .rating(rating)
+                                                    .checkIn(rs.getString("check_in"))
+                                                    .checkOut(rs.getString("check_out"))
+                                                    .type(rs.getString("type"))
+                                                    .build();
+
+                list.add(dto);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

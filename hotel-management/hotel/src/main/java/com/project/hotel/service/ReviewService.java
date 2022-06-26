@@ -2,9 +2,12 @@ package com.project.hotel.service;
 
 import com.project.hotel.domain.Review;
 import com.project.hotel.domain.customer.ReviewRepository;
+import com.project.hotel.web.dto.ReviewBoardDto;
 import com.project.hotel.web.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +44,10 @@ public class ReviewService {
 
     public void delete(String seq) {
         reviewRepository.delete(seq);
+    }
+
+    public ArrayList<ReviewBoardDto> findReviewList() {
+        return reviewRepository.findReviewList();
     }
 
 }
