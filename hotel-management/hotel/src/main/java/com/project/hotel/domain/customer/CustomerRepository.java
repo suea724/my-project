@@ -1,9 +1,8 @@
 package com.project.hotel.domain.customer;
 
 import com.project.hotel.domain.DBUtil;
-import com.project.hotel.web.dto.ReservationListDto;
+import com.project.hotel.web.dto.ReservationHistoryDto;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -159,8 +158,8 @@ public class CustomerRepository {
         }
     }
 
-    public ArrayList<ReservationListDto> findReservationList(String seq) {
-        ArrayList<ReservationListDto> list = new ArrayList<>();
+    public ArrayList<ReservationHistoryDto> findReservationList(String seq) {
+        ArrayList<ReservationHistoryDto> list = new ArrayList<>();
 
         try {
             Connection CONN = DBUtil.open();
@@ -177,7 +176,7 @@ public class CustomerRepository {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                ReservationListDto dto = ReservationListDto.builder()
+                ReservationHistoryDto dto = ReservationHistoryDto.builder()
                                                                 .seq(rs.getString("seq"))
                                                                 .reservationDate(rs.getString("rsv_date"))
                                                                 .roomType(rs.getString("type"))

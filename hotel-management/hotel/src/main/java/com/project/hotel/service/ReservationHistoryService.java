@@ -3,7 +3,7 @@ package com.project.hotel.service;
 import com.project.hotel.domain.customer.CustomerRepository;
 import com.project.hotel.domain.customer.ReservationRepository;
 import com.project.hotel.web.dto.ReservationDto;
-import com.project.hotel.web.dto.ReservationListDto;
+import com.project.hotel.web.dto.ReservationHistoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationService {
+public class ReservationHistoryService {
 
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
 
-    public ArrayList<ReservationListDto> findReservationList(String seq) {
+    public ArrayList<ReservationHistoryDto> findReservationList(String seq) {
         return customerRepository.findReservationList(seq);
     }
 

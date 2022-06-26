@@ -2,7 +2,6 @@ package com.project.hotel.domain.customer;
 
 import com.project.hotel.domain.DBUtil;
 import com.project.hotel.web.dto.ReservationDto;
-import com.project.hotel.web.dto.ReservationListDto;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;

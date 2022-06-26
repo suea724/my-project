@@ -1,7 +1,7 @@
 package com.project.hotel.web;
 
 import com.project.hotel.domain.customer.Customer;
-import com.project.hotel.service.ReservationService;
+import com.project.hotel.service.ReservationHistoryService;
 import com.project.hotel.service.ReviewService;
 import com.project.hotel.web.dto.ReservationDto;
 import com.project.hotel.web.dto.ReviewDto;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class ReservationController {
+public class ReservationHistoryController {
 
-    private final ReservationService reservationService;
+    private final ReservationHistoryService reservationService;
     private final ReviewService reviewService;
 
     @GetMapping("/customer/reservation")
@@ -29,7 +29,7 @@ public class ReservationController {
         HttpSession session = request.getSession();
         Customer loginCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
         model.addAttribute("reservationList", reservationService.findReservationList(loginCustomer.getSeq()));
-        return "customer/reservationList";
+        return "reservationHistory";
     }
 
     @GetMapping("/customer/reservation/{seq}")

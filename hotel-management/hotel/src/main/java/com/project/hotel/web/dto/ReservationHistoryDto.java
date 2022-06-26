@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ReservationListDto {
+public class ReservationHistoryDto {
 
     private String seq;
     private String reservationDate;
@@ -15,7 +15,7 @@ public class ReservationListDto {
     private String status;
 
     @Builder
-    public ReservationListDto(String seq, String reservationDate, String roomType, String guests, String checkIn, String checkOut, String status) {
+    public ReservationHistoryDto(String seq, String reservationDate, String roomType, String guests, String checkIn, String checkOut, String status) {
         this.seq = seq;
         this.reservationDate = reservationDate;
         this.roomType = roomType;
