@@ -29,7 +29,7 @@ public class ReservationHistoryController {
         HttpSession session = request.getSession();
         Customer loginCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
         model.addAttribute("reservationList", reservationService.findReservationList(loginCustomer.getSeq()));
-        return "reservationHistory";
+        return "customer/reservationHistory";
     }
 
     @GetMapping("/customer/reservation/{seq}")

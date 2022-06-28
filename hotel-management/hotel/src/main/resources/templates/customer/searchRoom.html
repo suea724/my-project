@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/94e7820b34.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/bootstrap.min.css}" href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script th:href="@{/js/bootstrap.min.js}" href="../../static/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#check-in" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate : 0,
+                maxDate : "+3M"
+            });
+        } );
+
+        $( function() {
+            $( "#check-out" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate : 1,
+                maxDate : "+3M"
+            });
+        } );
+
+    </script>
+    <style>
+        .container {
+            max-width: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="py-5 text-center">객실 예약</h2>
+    <form method="get" th:object="${reservationFormDto}">
+    <div class="row justify-content-evenly">
+        <div class="col-4">
+            <div>체크인</div>
+            <input type="text" id="check-in" class="form-control" th:field="*{checkIn}" required>
+        </div>
+        <div class="col-4">
+            <div>체크아웃</div>
+            <input type="text" id="check-out" class="form-control" th:field="*{checkOut}" required>
+        </div>
+        <div class="col-2">
+            <div>인원수</div>
+            <input type="number" min="1" max="6" id="guests" class="form-control" th:field="*{guests}" required>
+        </div>
+        <div class="col-auto mt-3">
+            <button id="search" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+    </form>
+
+    <div th:if="${rooms != null}">
+        <h3 class="text-center mt-3" th:text="|${period}박 ${period + 1}일|"></h3>
+        <table class="table table-bordered mt-3 text-center">
+            <tr>
+                <th>객실 유형</th>
+                <th>최대 인원 수</th>
+                <th>가격</th>
+                <th>예약</th>
+            </tr>
+            <tr th:each="room : ${rooms}">
+                <td th:text="${room.type}"></td>
+                <td th:text="${room.capacity}"></td>
+                <td th:text="${room.rate}"></td>
+                <td><input type="button" class="btn btn-info" value="예약하기"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
