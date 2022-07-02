@@ -15,7 +15,7 @@ main {
 }
 
 main section {
-    width: 800px;
+    width: 900px;
     margin: 0 auto;
 }
 
@@ -42,14 +42,22 @@ main > header > nav > ul > li {
     margin: 0 5px;
 }
 
-main > header > nav > ul > li > a {
+#communityView span {
+    color: gray;
+    cursor: pointer;
+}
+
+main > header > nav > ul > li > a,
+#communityList tr td:nth-child(2) a {
     color: black;
 }
 
-main > header > nav > ul > li > a:hover {
+#communityView span:hover,
+main > header > nav > ul > li > a:hover,
+#communityList tr td:nth-child(2) a:hover {
     text-decoration: none;
-    color: royalblue;
-    transition-duration: .5s;
+    color: #27a6ff;
+    transition-duration: .3s;
 }
 
 #login {
@@ -112,4 +120,46 @@ main > header > nav > ul > li > a:hover {
 #deluser input[type=submit] {
     margin-top: 5px;
     float: right;
+}
+
+.table.horizontal {
+    text-align: center;
+}
+
+#communityList th:nth-child(1) {width: 80px;}
+#communityList th:nth-child(2) {width: auto;}
+#communityList th:nth-child(3) {width: 150px;}
+#communityList th:nth-child(4) {width: 120px;}
+#communityList th:nth-child(5) {width: 80px;}
+
+.btn.right {
+    float: right;
+    margin: 0 5px 10px 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+#communityView tr td {
+    padding: 50px 30px 10px 30px;
+}
+
+#communityView tr:nth-child(2) td {
+    text-align: right;
+    margin-bottom: 30px;
+    padding-top: 0;
+}
+
+#communityView {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+}
+
+#contentBox {
+    text-align: justify;
+    min-height: 300px;
+    padding: 0 10px 10px 10px;
 }
