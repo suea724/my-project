@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'SUIT-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, h1, h2, h3, h4, h5, h6, a, div, span {
+    font-family: 'SUIT-Medium';
+}
+
+main {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+main > header {
+    height: 150px;
+    border-bottom: 1px solid #d9d9d9;
+    margin-bottom: 50px;
+}
+
+main > header > nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+main > header > nav > ul {
+    position: absolute;
+    display: flex;
+    right: 250px;
+    top: 120px;
+}
+
+main > header > nav > ul > li {
+    list-style-type: none;
+    margin: 0 5px;
+}
+
+main > header > nav > ul > li > a {
+    color: black;
+}
+
+main > header > nav > ul > li > a:hover {
+    text-decoration: none;
+    color: royalblue;
+    transition-duration: .5s;
+}
+
+#login {
+    margin: 0 auto;
+    width: 500px;
+}
+
+#login h2 {
+    text-align: center;
+}
+
+#login input, #login h2 {
+    margin-bottom: 20px;
+}
+
+#register h2 {
+    text-align: center;
+}
+
+#register {
+    width: 600px;
+    margin: 0 auto;
+}
+
+#register .table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#register .table td {
+    vertical-align: middle;
+}
+
+#register .btn {
+    display: block;
+    margin: 0 auto;
+    width: 550px;
+}
+
