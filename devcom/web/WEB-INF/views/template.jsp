@@ -8,7 +8,10 @@
     <div class="container">
         <main>
             <%@ include file="/WEB-INF/views/inc/header.jsp" %>
+            <section>
 
+
+            </section>
         </main>
     </div>
 </body>

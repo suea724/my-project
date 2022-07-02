@@ -64,4 +64,47 @@ public class UserDAO {
         }
         return null;
     }
+
+    public UserDTO get(String id) {
+        try {
+            String sql = "select * from tblUser where id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+
+            rs = pstmt.executeQuery();
+
+            UserDTO dto = null;
+
+            if (rs.next()) {
+                dto = UserDTO.builder()
+                        .id(id)
+                        .pw(rs.getString("pw"))
+                        .name(rs.getString("name"))
+                        .grade(rs.getString("grade"))
+                        .regdate(rs.getString("regdate"))
+                        .pic(rs.getString("pic"))
+                        .build();
+            }
+
+            return dto;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int del(String id) {
+        try {
+            String sql = "delete from tblUser where id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+
+            return pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -14,7 +14,7 @@
             <li><a href="/devcom/register.do">REGISTER</a></li>
             </c:if>
             <c:if test="${not empty auth}">
-                <li><a href="/devcom/mypage.do?id=}">MYPAGE</a></li>
+                <li><a href="/devcom/mypage.do">MYPAGE</a></li>
                 <li><a href="/devcom/logout.do">LOGOUT</a></li>
             </c:if>
         </ul>
