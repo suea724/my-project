@@ -35,4 +35,33 @@ public class UserDAO {
         }
         return 0;
     }
+
+    public UserDTO login(String id, String pw) {
+        try {
+            String sql = "select * from tblUser where id = ? and pw = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, pw);
+            rs = pstmt.executeQuery();
+
+            UserDTO dto = null;
+
+            if (rs.next()) {
+                dto = UserDTO.builder()
+                        .id(id)
+                        .pw(pw)
+                        .name(rs.getString("name"))
+                        .grade(rs.getString("grade"))
+                        .regdate(rs.getString("regdate"))
+                        .pic(rs.getString("pic"))
+                        .build();
+            }
+
+            return dto;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
