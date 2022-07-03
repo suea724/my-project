@@ -31,11 +31,17 @@ public class View extends HttpServlet {
 
         // 개행 처리
         CommunityViewDTO dto = dao.find(seq);
-        dto.setContent(dto.getContent().replace("\r\n", "<br>"));
 
-        request.setAttribute("dto", dto);
+        request.setAttribute("dto", setView(dto));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/community/view.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private CommunityViewDTO setView(CommunityViewDTO dto) {
+        dto.setContent(dto.getContent().replace("\r\n", "<br>"));
+        dto.setContent(dto.getContent().replace("<", "&lt;").replace(">", "&gt;"));
+
+        return dto;
     }
 }
