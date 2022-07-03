@@ -160,4 +160,33 @@ public class CommunityDAO {
         }
 
     }
+
+    public ArrayList<CommunityListDTO> findBySearch(String type, String keyword) {
+
+        try {
+            String sql = String.format("select * from vwCommunity where %s like '%%%s%%'", type, keyword);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            ArrayList<CommunityListDTO> list = new ArrayList<>();
+
+            while (rs.next()) {
+                CommunityListDTO dto = CommunityListDTO.builder()
+                        .seq(rs.getString("seq"))
+                        .title(rs.getString("title"))
+                        .regdate(rs.getString("regdate"))
+                        .viewcnt(rs.getInt("viewcnt"))
+                        .name(rs.getString("name"))
+                        .isnew(rs.getDouble("isnew"))
+                        .build();
+
+                list.add(dto);
+            }
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

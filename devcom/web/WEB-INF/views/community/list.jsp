@@ -43,7 +43,44 @@
                     </tr>
                 </c:forEach>
             </table>
+
+            <table id="communitySearch">
+                <form method="get" action="/devcom/community.do">
+                <tr>
+                    <td>
+                        <select class="form-control" name="type" id="type">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="name">작성자</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="keyword" id="keyword" class="form-control">
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-primary" value="검색" onclick="search();" required>
+                    </td>
+                </tr>
+                    <input type="hidden" name="isSearch" value="true">
+                </form>
+            </table>
+        </div>
     </main>
 </div>
+
+<script>
+    <c:if test="${isSearch.equals('true')}">
+    $('select[name=type]').val('${type}');
+    $('input[name=keyword]').val('${keyword}');
+    </c:if>
+
+    function search() {
+        let type = $('#type').val();
+        let keyword = $('#keyword').val();
+
+        location.href = '/devcom/community.do?&type='+ type +'&keyword=' + keyword + '&isSearch=true';
+    }
+
+</script>
 </body>
 </html>

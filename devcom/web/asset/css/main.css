@@ -163,3 +163,12 @@ h2 {
     min-height: 300px;
     padding: 0 10px 10px 10px;
 }
+
+#communitySearch {
+    width: 500px;
+    margin: 10px auto;
+}
+
+#communitySearch td {
+    padding: 5px 3px 0 3px;
+}
