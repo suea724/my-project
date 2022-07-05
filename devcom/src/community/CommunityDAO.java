@@ -21,11 +21,18 @@ public class CommunityDAO {
         conn = DBUtil.open();
     }
 
-    public ArrayList<CommunityListDTO> findAll() {
+    public ArrayList<CommunityListDTO> list(int page) {
+
         try {
-            String sql = "select * from vwCommunity";
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+
+            int begin = (page - 1) * 10 + 1;
+            int end = page * 10;
+
+            String sql = "select seq, title, regdate, viewcnt, id, name, isnew from (select rownum as rnum, c.* from vwCommunity c) where rnum between ? and ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, String.valueOf(begin));
+            pstmt.setString(2, String.valueOf(end));
+            rs = pstmt.executeQuery();
 
             ArrayList<CommunityListDTO> list = new ArrayList<>();
 
@@ -188,5 +195,22 @@ public class CommunityDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getTotalCount() {
+
+        try {
+            String sql = "select count(*) as cnt from vwCommunity";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return rs.getInt("cnt");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

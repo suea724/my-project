@@ -28,6 +28,15 @@ public class List extends HttpServlet {
 
         CommunityDAO dao = new CommunityDAO();
 
+        int page = 1;
+
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        Pagination pagination = new Pagination(page, dao.getTotalCount());
+        System.out.println("pagination = " + pagination);
+
         ArrayList<CommunityListDTO> list = null;
 
         if (isSearch != null && isSearch.equals("true")) { // 검색결과인 경우
@@ -42,9 +51,10 @@ public class List extends HttpServlet {
             request.setAttribute("keyword", keyword);
 
         } else { // 전체 리스트 출력 화면일 경우
-            list = dao.findAll();
+            list = dao.list(page);
         }
 
+        request.setAttribute("pagination", pagination);
         request.setAttribute("list", setList(list));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/community/list.jsp");

@@ -28,7 +28,7 @@
                         <td colspan="5">게시글이 없습니다.</td>
                     </tr>
                 </c:if>
-                <c:forEach var="dto" items="${list}">
+                <c:forEach var="dto" items="${list}" begin="">
                     <tr>
                         <td>${dto.seq}</td>
                         <td class="text-left">
@@ -64,6 +64,29 @@
                     <input type="hidden" name="isSearch" value="true">
                 </form>
             </table>
+
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <c:if test="${pagination.prev}">
+                    <li class="page-item">
+                        <a class="page-link" href="/devcom/community.do?page=${pagination.currentPage - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    </c:if>
+                    <c:forEach begin="${pagination.beginPage}" end="${pagination.endPage}" var="index">
+                    <li class="page-item"><a class="page-link" href="/devcom/community.do?page=${index}">${index}</a></li>
+                    </c:forEach>
+                    <c:if test="${pagination.next}">
+                    <li class="page-item">
+                        <a class="page-link" href="/devcom/community.do?page=${pagination.currentPage + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    </c:if>
+                </ul>
+            </nav>
         </div>
     </main>
 </div>

@@ -11,7 +11,7 @@ create table tblUser(
 select * from tblUser;
 
 -- 커뮤니티 글
-create table tblCommunityBoard(
+create table tblCommunity(
     seq number primary key,
     title varchar(300) not null,
     content varchar(4000) not null,
@@ -25,7 +25,7 @@ create sequence seqCommunity;
 -- 커뮤니티 리스트
 create or replace view vwCommunity
 as
-select c.*, u.name from tblUser u inner join tblCommunityBoard c on u.id = c.id order by seq desc;
+select c.*, u.name from tblUser u inner join tblCommunity c on u.id = c.id order by seq desc;
 
 select * from vwCommunity;
 

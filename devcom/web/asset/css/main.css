@@ -172,3 +172,12 @@ h2 {
 #communitySearch td {
     padding: 5px 3px 0 3px;
 }
+
+.pagination {
+    padding-top: 10px;
+    justify-content: center;
+}
+
+main {
+    padding-bottom: 50px;
+}
