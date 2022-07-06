@@ -1,6 +1,6 @@
 package community;
 
-import db.DBUtil;
+import common.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

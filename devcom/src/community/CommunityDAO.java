@@ -2,7 +2,7 @@ package community;
 
 import community.dto.CommunityListDTO;
 import community.dto.CommunityViewDTO;
-import db.DBUtil;
+import common.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

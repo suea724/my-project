@@ -1,6 +1,7 @@
 package community;
 
 import community.dto.CommunityListDTO;
+import common.Pagination;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

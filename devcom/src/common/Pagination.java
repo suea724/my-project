@@ -1,4 +1,4 @@
-package community;
+package common;
 
 import lombok.Data;
 
@@ -21,7 +21,7 @@ public class Pagination {
     }
 
     private void paging() {
-        beginPage = (currentPage / blockSize) * blockSize + 1; // 21 페이지부터 beginPage = 21
+        beginPage = (currentPage / (blockSize + 1)) * blockSize + 1; // 21 페이지부터 beginPage = 21
         endPage = beginPage + blockSize - 1;
 
         int totalPages = totalCount / blockRows + 1;
