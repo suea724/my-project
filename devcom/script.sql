@@ -69,6 +69,8 @@ create sequence seqStudyLanguage;
 
 create or replace view vwStudy
 as
-select s.seq, s.title, s.category, u.name, s.viewcnt, s.startdate  from tblStudy s inner join tblUser u on s.id = u.id;
+select s.seq, s.title, s.category, u.name, s.viewcnt, s.startdate  from tblStudy s inner join tblUser u on s.id = u.id order by seq desc;
+
+select * from vwStudy;
 
 commit;

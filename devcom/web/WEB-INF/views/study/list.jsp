@@ -8,41 +8,61 @@
 <div class="container">
     <main>
         <%@ include file="/WEB-INF/views/inc/header.jsp" %>
-        <div class="text-center">
-            <h2>Community</h2>
-            <h6>자유롭게 소통하는 게시판</h6>
+        <section>
+        <div class="text-center mb-5">
+            <h2>Study</h2>
+            <h6>스터디 또는 프로젝트 모집 게시판</h6>
         </div>
         <c:if test="${not empty auth}">
-            <input type="button" value="글 작성" class="btn btn-primary right" onclick="location.href='community/add.do'">
+            <div style="text-align: right">
+            <input type="button" value="글 작성" class="btn btn-primary" onclick="location.href='/devcom/study/add.do'">
+            </div>
         </c:if>
-        <table class="table table-bordered horizontal" id="communityList">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일자</th>
-                <th>작성자</th>
-                <th>조회수</th>
-            </tr>
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="study-list">
             <c:if test="${empty list}">
-                <tr>
-                    <td colspan="5">게시글이 없습니다.</td>
-                </tr>
+                <h5 id="no-posts">게시글이 없습니다.</h5>
             </c:if>
+
             <c:forEach var="dto" items="${list}">
-                <tr>
-                    <td>${dto.seq}</td>
-                    <td class="text-left">
-                        <a href="/devcom/community/view.do?seq=${dto.seq}">${dto.title}</a>
-                        <c:if test="${dto.isnew < 0.3}">
-                            <span class="badge badge-warning" style="color:white">new</span>
-                        </c:if>
-                    </td>
-                    <td>${dto.regdate}</td>
-                    <td>${dto.name}</td>
-                    <td>${dto.viewcnt}</td>
-                </tr>
+                <div class="col mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><a href="/devcom/study/view.do?seq=${dto.seq}">${dto.title}</a></h5>
+                            <h6 class="card-subtitle mb-2 text-muted text-right">${dto.name}<p class="card-text text-muted" style="font-size: 0.8rem">조회 : ${dto.viewcnt}</p></h6>
+                            <div class="card-section">
+                            <p class="card-text"> 시작 일자 | ${dto.startdate}</p>
+                            <p class="card-text">유형 | ${dto.category}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </c:forEach>
-        </table>
+            </div>
+
+            <c:if test="${not empty list}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item">
+                            <a class="page-link" href="/devcom/study.do?page=${pagination.currentPage - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="${pagination.beginPage}" end="${pagination.endPage}" var="index">
+                        <li class="page-item"><a class="page-link" href="/devcom/study.do?page=${index}">${index}</a></li>
+                    </c:forEach>
+                    <c:if test="${pagination.next}">
+                        <li class="page-item">
+                            <a class="page-link" href="/devcom/study.do?page=${pagination.currentPage + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+            </c:if>
+        </section>
     </main>
 </div>
 </body>

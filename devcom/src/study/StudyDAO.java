@@ -1,6 +1,7 @@
 package study;
 
 import common.DBUtil;
+import common.Pagination;
 import study.dto.StudyListDTO;
 import study.dto.StudyViewDTO;
 
@@ -21,12 +22,18 @@ public class StudyDAO {
         conn = DBUtil.open();
     }
 
-    public ArrayList<StudyListDTO> list() {
+    public ArrayList<StudyListDTO> list(int page) {
 
         try {
-            String sql = "select * from vwStudy";
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+
+            int begin = (page - 1) * 9 + 1;
+            int end = page * 9;
+
+            String sql = "select * from vwStudyList where rnum between ? and ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, String.valueOf(begin));
+            pstmt.setString(2, String.valueOf(end));
+            rs = pstmt.executeQuery();
 
             ArrayList<StudyListDTO> list = new ArrayList<>();
 
@@ -103,7 +110,7 @@ public class StudyDAO {
 
     public StudyViewDTO get(String seq) {
         try {
-            String sql = "select * from vwStudy where seq = ?";
+            String sql = "select * from vwStudyView where seq = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, seq);
             ResultSet rs = pstmt.executeQuery();
@@ -145,5 +152,21 @@ public class StudyDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getTotalCount() {
+        try {
+            String sql = "select count(*) as cnt from tblStudy";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString("cnt"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

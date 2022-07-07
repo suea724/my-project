@@ -27,13 +27,17 @@ main > header {
 
 main > header > nav {
     display: flex;
+    position: relative;
+    left: 0;
+    top: 0;
     justify-content: space-between;
 }
 
 main > header > nav > ul {
     position: absolute;
     display: flex;
-    right: 250px;
+    position: absolute;
+    right: 0;
     top: 120px;
 }
 
@@ -137,6 +141,12 @@ main > header > nav > ul > li > a:hover,
     margin: 0 5px 10px 0;
 }
 
+.btn.right:after {
+    content: '';
+    clear: both;
+
+}
+
 h2 {
     text-align: center;
 }
@@ -179,5 +189,68 @@ h2 {
 }
 
 main {
-    padding-bottom: 50px;
+    padding-bottom: 80px;
+}
+
+h3 {
+    text-align: center;
+}
+
+#study-add > tr > td {
+    display: block;
+}
+
+#study-add td, #study-view td {
+    width: 450px;
+}
+
+#study-view td {
+    padding: 25px 20px;
+}
+
+#study-content-box {
+    min-height: 300px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#delete-update {
+    cursor:pointer;
+    color: dimgray;
+    text-align: right;
+}
+
+#delete-update > span:hover {
+    color: #27a6ff;
+    transition-duration: .3s;
+}
+
+#study-list .card {
+    padding: 10px;
+    height: 300px;
+}
+
+.card .card-section {
+    text-align: center;
+}
+
+.card a {
+    color: black;
+    font-weight: bold;
+}
+
+.card a:hover {
+    text-decoration: none;
+    color: #27a6ff;
+    transition-duration: .3s;
+}
+
+#no-posts {
+    margin: 50px auto;
+    text-align: center;
+}
+
+nav > .pagination {
+    margin-top: 50px;
 }
