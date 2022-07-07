@@ -35,7 +35,7 @@ public class List extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        Pagination pagination = new Pagination(page, dao.getTotalCount());
+        Pagination pagination = new Pagination(page, dao.getTotalCount(), 10, 10);
         System.out.println("pagination = " + pagination);
 
         ArrayList<CommunityListDTO> list = null;
