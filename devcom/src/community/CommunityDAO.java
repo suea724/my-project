@@ -168,16 +168,21 @@ public class CommunityDAO {
 
     }
 
-    public ArrayList<CommunityListDTO> findBySearch(String type, String keyword) {
+    public ArrayList<CommunityListDTO> findBySearch(String type, String keyword, int page) {
 
         try {
-            String sql = String.format("select * from vwCommunity where %s like '%%%s%%'", type, keyword);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+            int begin = (page - 1) * 10 + 1;
+            int end = page * 10;
+
+            String sql = String.format("select * from (select rownum as rnum, c.* from vwCommunity c where %s like '%%%s%%') where rnum between ? and ?", type, keyword);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, String.valueOf(begin));
+            pstmt.setString(2, String.valueOf(end));
+            rs = pstmt.executeQuery();
 
             ArrayList<CommunityListDTO> list = new ArrayList<>();
 
-            while (rs.next()) {
+            while(rs.next()) {
                 CommunityListDTO dto = CommunityListDTO.builder()
                         .seq(rs.getString("seq"))
                         .title(rs.getString("title"))
@@ -195,6 +200,23 @@ public class CommunityDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getSearchCount (String type, String keyword) {
+
+        try {
+            String sql = String.format("select count(*) as cnt from vwCommunity where %s like '%%%s%%'", type, keyword);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return rs.getInt("cnt");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public int getTotalCount() {

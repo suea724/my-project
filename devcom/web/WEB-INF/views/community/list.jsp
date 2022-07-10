@@ -65,7 +65,31 @@
                 </form>
             </table>
 
+            <c:if test="${isSearch == true}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item">
+                            <a class="page-link" href="/devcom/community.do?page=${pagination.currentPage - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="${pagination.beginPage}" end="${pagination.endPage}" var="index">
+                        <li class="page-item"><a class="page-link" href="/devcom/community.do?isSearch=true&type=${type}&keyword=${keyword}&page=${index}">${index}</a></li>
+                    </c:forEach>
+                    <c:if test="${pagination.next}">
+                        <li class="page-item">
+                            <a class="page-link" href="/devcom/community.do?page=${pagination.currentPage + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+            </c:if>
 
+            <c:if test="${empty isSearch}">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <c:if test="${pagination.prev}">
@@ -87,11 +111,13 @@
                     </c:if>
                 </ul>
             </nav>
+            </c:if>
         </div>
     </main>
 </div>
 
 <script>
+
     <c:if test="${isSearch.equals('true')}">
     $('select[name=type]').val('${type}');
     $('input[name=keyword]').val('${keyword}');

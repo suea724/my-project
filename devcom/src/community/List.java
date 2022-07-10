@@ -34,24 +34,25 @@ public class List extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+        // System.out.println("pagination = " + pagination);
 
-        Pagination pagination = new Pagination(page, dao.getTotalCount(), 10, 10);
-        System.out.println("pagination = " + pagination);
+        ArrayList<CommunityListDTO> list;
+        Pagination pagination = null;
 
-        ArrayList<CommunityListDTO> list = null;
-
-        if (isSearch != null && isSearch.equals("true")) { // 검색결과인 경우
+        if (isSearch!= "" && isSearch != null && isSearch.equals("true")) { // 검색결과인 경우
 
             String type = request.getParameter("type");
             String keyword = request.getParameter("keyword");
 
-            list = dao.findBySearch(type, keyword);
+            pagination = new Pagination(page, dao.getSearchCount(type, keyword), 10, 10);
+            list = dao.findBySearch(type, keyword, page);
 
             request.setAttribute("isSearch", isSearch);
             request.setAttribute("type", type);
             request.setAttribute("keyword", keyword);
 
         } else { // 전체 리스트 출력 화면일 경우
+            pagination = new Pagination(page, dao.getTotalCount(), 10, 10);
             list = dao.list(page);
         }
 
