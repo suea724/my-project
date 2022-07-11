@@ -254,3 +254,13 @@ h3 {
 nav > .pagination {
     margin-top: 50px;
 }
+
+body span.lang {
+    display: inline-block;
+    background-color: #D6EFFF;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    font-size: 0.8rem;
+    color: #3B3B3B;
+}

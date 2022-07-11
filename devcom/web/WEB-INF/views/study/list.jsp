@@ -32,6 +32,9 @@
                             <div class="card-section">
                             <p class="card-text"> 시작 일자 | ${dto.startdate}</p>
                             <p class="card-text">유형 | ${dto.category}</p>
+                            <c:forEach var="lang" items="${dto.langs}" begin="0" end="4">
+                                <span class="lang">${lang}</span>
+                            </c:forEach>
                             </div>
                         </div>
                     </div>

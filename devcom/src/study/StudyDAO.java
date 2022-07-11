@@ -132,6 +132,7 @@ public class StudyDAO {
                 dto.setViewcnt(rs.getInt("viewcnt"));
                 dto.setName(rs.getString("name"));
                 dto.setId(rs.getString("id"));
+                dto.setLangs(listLang(seq));
             }
             return dto;
 

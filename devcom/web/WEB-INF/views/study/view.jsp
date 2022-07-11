@@ -75,7 +75,9 @@
           </tr>
           <tr>
             <td colspan="2">
-              <input name='tags4' readonly value=''>
+              <c:forEach items="${dto.langs}" var="lang">
+                <span class="lang">${lang}</span>
+              </c:forEach>
             </td>
           </tr>
           <tr>
