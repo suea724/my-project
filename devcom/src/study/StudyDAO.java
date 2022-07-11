@@ -1,7 +1,6 @@
 package study;
 
 import common.DBUtil;
-import common.Pagination;
 import study.dto.StudyListDTO;
 import study.dto.StudyViewDTO;
 
@@ -108,6 +107,8 @@ public class StudyDAO {
         return 0;
     }
 
+
+
     public StudyViewDTO get(String seq) {
         try {
             String sql = "select * from vwStudyView where seq = ?";
@@ -168,5 +169,81 @@ public class StudyDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public ArrayList<String> findAllLangs() {
+        try {
+            String sql = "select * from tblLanguage";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            ArrayList<String> list = new ArrayList<>();
+
+            while(rs.next()) {
+                list.add(rs.getString("lang"));
+            }
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // 테이블에 존재하지 않는 언어만 찾음
+    public ArrayList<String> getNewLangs(ArrayList<String> langs) {
+
+        try {
+
+            ArrayList<String> list = new ArrayList<>();
+
+            for (String lang : langs) {
+                String sql = "select * from tblLanguage where lang = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, lang);
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+
+                } else {
+                    list.add(rs.getString("lang"));
+                }
+            }
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void addLangs(String lang) {
+        try {
+            String sql = "insert into tblLanguage values (seqLanguage.nextVal, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, lang);
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addStudyLang(String maxseq, ArrayList<String> langs) {
+        try {
+
+            for (String lang : langs) {
+                String sql = "insert into tblStudyLanguage values (seqStudyLanguage.nextVal, ?, (select seq from tblLanguage where lang = ?))";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, maxseq);
+                pstmt.setString(2, lang);
+                pstmt.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

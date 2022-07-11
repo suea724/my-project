@@ -51,19 +51,31 @@ create sequence seqStudy;
 -- 사용 언어
 create table tblLanguage(
     seq number primary key,
-    lang varchar2(100) not null
+    lang varchar2(100) not null unique
 );
 
 create sequence seqLanguage;
 
+insert into tblLanguage values (seqLanguage.nextVal, 'Java');
+insert into tblLanguage values (seqLanguage.nextVal, 'Spring');
+insert into tblLanguage values (seqLanguage.nextVal, 'Pyhthon');
+insert into tblLanguage values (seqLanguage.nextVal, 'Oracle');
+insert into tblLanguage values (seqLanguage.nextVal, 'React');
+insert into tblLanguage values (seqLanguage.nextVal, 'Vue');
+insert into tblLanguage values (seqLanguage.nextVal, 'JavaScript');
+
+select * from tblLanguage;
+
 -- 스터디 게시판 - 사용 언어
 create table tblStudyLanguage(
     seq number primary key,
-    sseq references tblStudy(seq) not null,
+    sseq references tblStudy(seq) on delete cascade not null,
     lseq references tblLanguage(seq) not null
 );
 
-select l.lang from tblStudy s inner join tblStudyLanguage sl on s.seq = sl.sseq inner join tblLanguage l on l.seq = sl.lseq;
+select * from tblStudy s inner join tblStudyLanguage sl on s.seq = sl.sseq inner join tblLanguage l on l.seq = sl.lseq;
+
+insert into tblStudyLanguage values (seqStudyLanguage.nextVal, ?, (select seq from tblLanguage where lang = ''));
 
 create sequence seqStudyLanguage;
 
