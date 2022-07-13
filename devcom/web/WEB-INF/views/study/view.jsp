@@ -91,9 +91,6 @@
   </main>
 </div>
 <script>
-  var input = document.querySelector('input[name=tags4]'),
-          tagify = new Tagify(input);
-
   let seq = "<c:out value='${dto.seq}' />"
 
   deletePost = function () {

@@ -72,7 +72,7 @@ public class StudyDAO {
 
             ArrayList<String> list = new ArrayList<>();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 list.add(rs.getString("lang"));
             }
 
@@ -108,7 +108,6 @@ public class StudyDAO {
     }
 
 
-
     public StudyViewDTO get(String seq) {
         try {
             String sql = "select * from vwStudyView where seq = ?";
@@ -129,6 +128,7 @@ public class StudyDAO {
                 dto.setTitle(rs.getString("title"));
                 dto.setContent(rs.getString("content"));
                 dto.setRegdate(rs.getString("regdate"));
+                dto.setStartdate(rs.getString("startdate"));
                 dto.setViewcnt(rs.getInt("viewcnt"));
                 dto.setName(rs.getString("name"));
                 dto.setId(rs.getString("id"));
@@ -180,7 +180,7 @@ public class StudyDAO {
 
             ArrayList<String> list = new ArrayList<>();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 list.add(rs.getString("lang"));
             }
             return list;
@@ -245,6 +245,40 @@ public class StudyDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    public int del(String seq) {
+        try {
+            String sql = "delete from tblStudy where seq = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, seq);
+            return pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int update(StudyViewDTO dto) {
+        try {
+            String sql = "update tblStudy set progressway = ?, recruitment = ?, startdate = ?, contact = ?, title = ?, content = ? where seq = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, dto.getProgressway());
+            pstmt.setString(2, dto.getRecruitment());
+            pstmt.setString(3, dto.getStartdate());
+            pstmt.setString(4, dto.getContact());
+            pstmt.setString(5, dto.getTitle());
+            pstmt.setString(6, dto.getContent());
+            pstmt.setString(7, dto.getSeq());
+
+            return pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
 
     }
 }
