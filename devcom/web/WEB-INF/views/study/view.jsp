@@ -3,6 +3,15 @@
 <html>
 <head>
   <title>Devcom</title>
+  <style>
+    #info {
+      text-align: right;
+    }
+
+    #info span, #info div {
+      color: gray;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -26,10 +35,11 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" style="text-align: right">
-                <span style="color:gray">${dto.name}</span>
+            <td colspan="2" id="info">
+                <span>${dto.name}</span>
                 &nbsp;
-                <span style="color:gray">${dto.regdate}</span>
+                <span>${dto.regdate}</span>
+                <div>조회 : ${dto.viewcnt}</div>
             </td>
           </tr>
           <tr>

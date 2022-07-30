@@ -281,4 +281,16 @@ public class StudyDAO {
         return 0;
 
     }
+
+    public void addViewCnt(String seq) {
+        try {
+            String sql = "update tblStudy set viewcnt = viewcnt + 1 where seq = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, seq);
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

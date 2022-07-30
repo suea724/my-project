@@ -19,15 +19,16 @@ public class View extends HttpServlet {
         String seq = req.getParameter("seq");
 
         StudyDAO dao = new StudyDAO();
+
+        dao.addViewCnt(seq);
         StudyViewDTO dto = dao.get(seq);
+
+        dto.setStartdate(dto.getStartdate().substring(0, 10));
+
         req.setAttribute("dto", dto);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/study/view.jsp");
         dispatcher.forward(req, resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }
