@@ -18,7 +18,7 @@
         <tr>
           <td>
             <div>
-              <span style="font-weight: bold">${dto.name}</span>
+              <span style="font-weight: bold; color: gray;">${dto.name}</span>
               &nbsp;
               <span style="color: gray;">${dto.regdate}</span>
               <br>
@@ -35,7 +35,7 @@
         </tr>
         <c:if test="${auth == dto.id}">
         <tr>
-          <td class="text-right">
+          <td class="text-right" id="change">
             <%--<a href="/devcom/community/update.do?seq=${dto.seq}" onclick>[수정]</a>
             <a href="/devcom/community/delete.do?seq=${dto.seq}">[삭제]</a>--%>
             <span onclick="location.href='/devcom/community/update.do?seq=${dto.seq}'">[수정]</span>

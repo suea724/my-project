@@ -46,19 +46,22 @@ main > header > nav > ul > li {
     margin: 0 5px;
 }
 
-#communityView span {
+#communityView #change span,
+.table tr td .update-comment span {
     color: gray;
     cursor: pointer;
 }
 
 main > header > nav > ul > li > a,
-#communityList tr td:nth-child(2) a {
+#communityList tr td:nth-child(2) a,
+#qnaList tr td:nth-child(2) a {
     color: black;
 }
 
-#communityView span:hover,
+#communityView #change span:hover,
 main > header > nav > ul > li > a:hover,
-#communityList tr td:nth-child(2) a:hover {
+#communityList tr td:nth-child(2) a:hover,
+#qnaList tr td:nth-child(2) a:hover {
     text-decoration: none;
     color: #27a6ff;
     transition-duration: .3s;
@@ -174,12 +177,12 @@ h2 {
     padding: 0 10px 10px 10px;
 }
 
-#communitySearch {
+#communitySearch, #qnaSearch {
     width: 500px;
     margin: 10px auto;
 }
 
-#communitySearch td {
+#communitySearch td, #qnaSearch td {
     padding: 5px 3px 0 3px;
 }
 
@@ -264,3 +267,49 @@ body span.lang {
     font-size: 0.8rem;
     color: #3B3B3B;
 }
+
+#qnalist th:nth-child(1) {width: 80px;}
+#qnalist th:nth-child(2) {width: auto;}
+#qnalist th:nth-child(3) {width: 150px;}
+#qnalist th:nth-child(4) {width: 120px;}
+#qnalist th:nth-child(5) {width: 80px;}
+#qnalist th:nth-child(6) {width: 80px;}
+
+#answerList tr td {
+    padding: 20px;
+}
+
+.answer-info {
+    color: dimgray;
+    margin-bottom: 15px;
+}
+
+#input-answer tr td {
+    border: none;
+}
+
+#input-answer tr td:nth-child(2) {
+    vertical-align: middle;
+}
+
+#input-answer textarea {
+    resize: none;
+    width: 780px;
+    height: 100px;
+    display: inline-block;
+}
+
+#input-answer input[type=button] {
+    display: inline-block;
+}
+
+.table .btn.btn-status {
+    margin-bottom: 5px;
+}
+
+
+.table tr td .update-comment {
+    text-align: right;
+}
+
+

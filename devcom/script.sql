@@ -56,14 +56,6 @@ create table tblLanguage(
 
 create sequence seqLanguage;
 
-insert into tblLanguage values (seqLanguage.nextVal, 'Java');
-insert into tblLanguage values (seqLanguage.nextVal, 'Spring');
-insert into tblLanguage values (seqLanguage.nextVal, 'Pyhthon');
-insert into tblLanguage values (seqLanguage.nextVal, 'Oracle');
-insert into tblLanguage values (seqLanguage.nextVal, 'React');
-insert into tblLanguage values (seqLanguage.nextVal, 'Vue');
-insert into tblLanguage values (seqLanguage.nextVal, 'JavaScript');
-
 select * from tblLanguage;
 
 -- 스터디 게시판 - 사용 언어
@@ -73,16 +65,68 @@ create table tblStudyLanguage(
     lseq references tblLanguage(seq) not null
 );
 
-select * from tblStudy s inner join tblStudyLanguage sl on s.seq = sl.sseq inner join tblLanguage l on l.seq = sl.lseq;
-
-insert into tblStudyLanguage values (seqStudyLanguage.nextVal, ?, (select seq from tblLanguage where lang = ''));
-
 create sequence seqStudyLanguage;
 
-create or replace view vwStudy
-as
-select s.seq, s.title, s.category, u.name, s.viewcnt, s.startdate  from tblStudy s inner join tblUser u on s.id = u.id order by seq desc;
+-- Q&A 게시판 질문글
+create table tblQuestion (
+    seq number primary key,
+    id references tblUser(id) not null,
+    title varchar2(100) not null,
+    content varchar2(1000) not null,
+    regdate date default sysdate not null,
+    viewcnt number default 0 not null,
+    status varchar2(10) default '미해결' check (status in ('해결', '미해결')) not null
+);
 
-select * from vwStudy;
+create sequence seqQuestion;
+
+-- Q&A 리스트 뷰
+create or replace view vwQuestionList
+as
+select * from (select q.seq, q.title, q.regdate, q.viewcnt, q.status, q.content, u.name, (sysdate - q.regdate) as isnew, (select count(*) from tblAnswer a where a.qseq = q.seq) as answercnt from tblQuestion q inner join tblUser u on q.id = u.id order by seq desc);
+
+-- Q&A 상세 뷰
+create or replace view vwQuestion
+as
+select q.seq, q.title, q.content, q.regdate, q.viewcnt, q.status, u.name, u.id from tblQuestion q inner join tblUser u on q.id = u.id;
+
+
+-- Q&A 게시판 답변글
+create table tblAnswer(
+    seq number primary key,
+    id references tblUser(id) not null,
+    qseq references tblQuestion(seq) not null,
+    content varchar2(1000) not null,
+    regdate date default sysdate not null
+);
+
+create sequence seqAnswer;
+
+-- Q&A 게시판 답변 리스트 뷰
+create or replace view vwAnswer
+as
+select a.seq, a.qseq, a.content, a.regdate, a.id, (select name from tblUser u where id = a.id) as name from tblAnswer a order by seq;
+
+
+
+
+
+
+select * from vwQuestionList;
+
+select * from vwAnswer;
+
+select * from tblQuestion;
+select * from tblAnswer;
+
+insert into tblQuestion values (seqQuestion.nextval, 'sua', '제목 테스트', '내용 입니다.', default, default, default);
+
+insert into tblAnswer values (1, 'test', 1, '그렇게 하는거 아닌데', sysdate);
+insert into tblAnswer values (2, 'test', 1, '그렇게 하는거 아닌데', sysdate);
+insert into tblAnswer values (3, 'test', 1, '그렇게 하는거 아닌데', sysdate);
+insert into tblAnswer values (4, 'test', 1, '그렇게 하는거 아닌데', sysdate);
+insert into tblAnswer values (5, 'test', 1, '그렇게 하는거 아닌데', sysdate);
+
+update tblQuestion set status = '미해결';
 
 commit;
