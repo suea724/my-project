@@ -59,6 +59,36 @@ public class QnaDAO {
         return null;
     }
 
+    public ArrayList<QnaListDTO> findTen() {
+
+        try {
+
+        String sql = "select * from (select * from vwQuestion order by viewcnt desc) where rownum <= 10";
+        stmt = conn.prepareStatement(sql);
+        rs = stmt.executeQuery(sql);
+
+        ArrayList<QnaListDTO> list = new ArrayList<>();
+
+        while(rs.next()) {
+            QnaListDTO dto = QnaListDTO.builder()
+                    .seq(rs.getString("seq"))
+                    .title(rs.getString("title"))
+                    .regdate(rs.getString("regdate"))
+                    .viewcnt(rs.getInt("viewcnt"))
+                    .status(rs.getString("status"))
+                    .name(rs.getString("name"))
+                    .build();
+
+            list.add(dto);
+        }
+        return list;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+        return null;
+    }
+
     public int getTotalCount() {
         try {
             String sql = "select count(*) as cnt from tblQuestion";

@@ -62,6 +62,42 @@ public class StudyDAO {
         return null;
     }
 
+    public ArrayList<StudyListDTO> findSix() {
+
+        try {
+
+            String sql = "select * from (select * from vwStudy order by viewcnt desc) where rownum <= 6";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
+
+            ArrayList<StudyListDTO> list = new ArrayList<>();
+
+            while (rs.next()) {
+
+                String seq = rs.getString("seq");
+
+                ArrayList<String> langList = listLang(seq);
+
+                StudyListDTO dto = StudyListDTO.builder()
+                        .seq(seq)
+                        .title(rs.getString("title"))
+                        .category(rs.getString("category"))
+                        .name(rs.getString("name"))
+                        .viewcnt(rs.getInt("viewcnt"))
+                        .startdate(rs.getString("startdate"))
+                        .langs(langList)
+                        .build();
+
+                list.add(dto);
+            }
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private ArrayList<String> listLang(String seq) {
 
         try {

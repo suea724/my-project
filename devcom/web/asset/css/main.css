@@ -312,4 +312,28 @@ body span.lang {
     text-align: right;
 }
 
+#index-layout {
+    margin: 0 auto;
+}
 
+.container #index-layout .table tr td a {
+    color: black;
+}
+
+.container #index-layout .table tr td a:hover {
+    color: #27a6ff;
+    text-decoration: none;
+    transition: .3s;
+}
+
+#index-layout table th, #index-layout table td {
+    text-align: center;
+}
+
+#index-layout table td:nth-child(2) {
+    text-align: left;
+}
+
+i.fa-solid.fa-fire {
+    color: orangered;
+}

@@ -56,6 +56,36 @@ public class CommunityDAO {
         return null;
     }
 
+    public ArrayList<CommunityListDTO> findTen() {
+
+        try {
+
+            String sql = "select * from (select * from vwCommunity order by viewcnt desc) where rownum <= 10";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
+
+            ArrayList<CommunityListDTO> list = new ArrayList<>();
+
+            while(rs.next()) {
+                CommunityListDTO dto = CommunityListDTO.builder()
+                                                        .seq(rs.getString("seq"))
+                                                        .title(rs.getString("title"))
+                                                        .regdate(rs.getString("regdate"))
+                                                        .viewcnt(rs.getInt("viewcnt"))
+                                                        .name(rs.getString("name"))
+                                                        .isnew(rs.getDouble("isnew"))
+                                                        .build();
+
+                list.add(dto);
+            }
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String save(String title, String content, String id) {
         try {
             String sql = "insert into tblCommunity(seq, title, content, regdate, viewcnt, id) values(seqCommunity.nextVal, ?, ?, default, default, ?)";
@@ -235,4 +265,5 @@ public class CommunityDAO {
         }
         return 0;
     }
+
 }
